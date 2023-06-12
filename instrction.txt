@@ -1,0 +1,11 @@
+基于线性回归模型预测波士顿房价
+
+1 所需的第三方库
+    数据分析
+    a) numpy
+    b) pandas
+    数据可视化
+    c) matplotlib.pyplot
+    d) seaborn
+    数据集及回归模型训练与测试
+    e)sklearn
