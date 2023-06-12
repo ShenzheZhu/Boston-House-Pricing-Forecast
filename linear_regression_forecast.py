@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
-from sklearn import datasets
+from sklearn.model_selection import train_test_split
 
 plt.rcParams['font.sans-serif'] = ['SimHei']
 
@@ -28,7 +28,7 @@ class LinearRegressionTraining:
         # 打印前五行数据
         # boston_df.head()
         # 打印均值，最大值，最小值等信息
-        print(boston_df.describe())
+        # print(boston_df.describe())
 
 
 
