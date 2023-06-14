@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from IPython.core.pylabtools import figsize
 from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -102,11 +101,16 @@ lr.fit(x_train, y_train)
 y_test_pre = lr.predict(x_test)
 y_train_pre = lr.predict(x_train)
 
-# 基于R2函数进行模型分析
+# 基于sklearn中的预测性能得分功能进行模型分析
+# score越高则代表预测性能越好
 score = lr.score(x_test, y_test)
 MSE_test = mean_squared_error(y_test, y_test_pre)
 MSE_train = mean_squared_error(y_train, y_train_pre)
-print(f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}")
+coefficient = lr.coef_
+intercept = lr.intercept_
+
+print(f"Correlation Coefficient: w = %s, b = %s\n"
+      f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}" % (coefficient, intercept))
 
 
 # 绘制真实值与预测值的图像
@@ -115,3 +119,5 @@ plt.plot(y_test_pre, label='predicted')
 plt.title('Predicted and Real Value ' + r'$R^2=%.4f$' % (r2_score(y_train_pre, y_train)))
 plt.legend()
 plt.show()
+
+
