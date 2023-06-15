@@ -13,7 +13,7 @@ from sklearn.preprocessing import StandardScaler
 
 plt.rcParams['font.sans-serif'] = ['SimHei']
 
-# 数据导入
+# Data Import
 data_url = "http://lib.stat.cmu.edu/datasets/boston"
 raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
 data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
@@ -23,19 +23,19 @@ feature_names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD'
 boston_df = pd.DataFrame(data, columns=feature_names)
 boston_df["PRICE"] = target
 
-# 检查是否存在空值
+# Check if there is any Null value
 boston_df.isnull().sum()
-# 查看数据大小
+# Check the size of data
 boston_df.shape
-# 打印前五行数据
+# Print out the first five rows of data
 boston_df.head()
-# 打印均值，最大值，最小值等信息
+# Print mean, maximum, minimum and other information
 boston_df.describe()
-# 提出异常样本有主意提升训练质量
+# Presenting anomalous samples helps to improve the training quality
 # boston_df = boston_df.loc[boston_df['PRICE'] < 50]
 
-# correlation分析
-# 分析各个特征与PRICE的相关性，并用可视化工具展示
+# correlation analysis
+# Analyze the correlation of each feature with PRICE and present it with visualization
 """
 plt.figure(facecolor='grey')
 corr = boston_df.corr()
@@ -44,7 +44,7 @@ corr[abs(corr) > 0.5].sort_values().plot.bar()
 plt.show()
 """
 
-# 分析前三相关的特征的散点图
+# Analysis of scatter plots of the first three features associated with PRICE
 
 """
 # LSTAT
@@ -72,55 +72,48 @@ plt.title('INDUS')
 plt.show()
 """
 
-# 分析与房价相关的前三个数据
 boston_df.corr()['PRICE'].abs().sort_values(ascending=False).head(4)
 
-# 通过分析柱状图与散点图，我们发现LSTAT, PT RATIO, RM和PRICE的相关系数绝对值最高
-# 结论：每套住宅平均房间数越多，房屋均价越高；该地区的低地位人口比例越大，房屋均价越低。
+# By analyzing the histogram and scatter plot, we found that LSTAT, PT RATIO, RM and PRICE have the highest absolute
+# values of correlation coefficients
+# Conclusion: The higher the average number of rooms per dwelling, the higher the
+# average housing price; the greater the proportion of low-status population in the area, the lower the average
+# housing price。
 
-# 数据筛选
-# 在数据集的特征中删除掉除了上面三个之外的所有特征
+# Data Filtering
+# Remove all but the above three features from the dataset's features
 # boston_df = boston_df[['LSTAT', 'RM', 'PTRATIO', 'PRICE']]
 y = np.array(boston_df['PRICE'])
 boston_df = boston_df.drop(['PRICE'], axis=1)
 X = np.array(boston_df)
 
-"""
-# 实例化
-ss = StandardScaler()
-# 特征数据
-X = ss.fit_transform(X)
-# 目标变量
-y = ss.fit_transform(y.reshape(-1,1))
-"""
-
-# 划分训练集与测试集
-# x_train, y_train 表示训练集中的特征值与目标值
-# x_test, y_train 表示测试集中的特征值与目标值
+# Dividing the training set and test set
+# x_train, y_train denote the feature values and target values in the training set
+# x_test, y_train denotes the feature values and target values in the test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=888)
 
 """
-# 数据归一化
-# 创建min_max标准化器实例
+# Data normalization
+# Create min_max normalizer instance
 min_max = preprocessing.MinMaxScaler()
-# 数据归一
+# Normalize the data
 X_train = min_max.fit_transform(X_train)
 y_train = min_max.fit_transform(y_train.reshape(-1, 1))
 X_test = min_max.fit_transform(X_test)
 y_test = min_max.fit_transform(y_test.reshape(-1, 1))
 """
 
-# 模型训练
+# Model training
 
-# 采用Linear Regression模型进行训练与预测
+# Training and prediction using Linear Regression model
 lr = LinearRegression()
-# 拟合
+# Regression
 lr.fit(X_train, y_train)
-# 得出预测值
+# Get the predicted value
 y_test_pre_linear = lr.predict(X_test)
 y_train_pre_linear = lr.predict(X_train)
-# 基于sklearn中的预测性能得分功能进行模型分析
-# score越高则代表预测性能越好
+# Model analysis based on the prediction performance score function in sklearn
+# Higher score means better prediction performance
 score = lr.score(X_test, y_test)
 MSE_test = mean_squared_error(y_test, y_test_pre_linear)
 MSE_train = mean_squared_error(y_train, y_train_pre_linear)
@@ -132,14 +125,12 @@ print(f"Correlation Coefficient: w = %s, b = %s\nR2: {r2}\n"
       f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
 
 
+"""Conclusion: the following horizontal optimization scheme is not ideal, and when trying to de-regularize the linear 
+regression model, the size of the data set is too small, which instead makes the performance of the model much worse 
+It is recommended to optimize vertically, i.e., to develop more learning models
 """
-结论：如下的横向优化方案并不理想，当尝试去正则化线性回归模型时，由于数据集的规模太小，反而让模型的性能大打折扣
-建议纵向优化，即发展更多的学习模型
 
-"""
-
-
-# 采用Ridge Regression模型进行训练与预测
+# Training and predicting using Ridge Regression model
 ridge = Ridge()
 ridge.fit(X_train, y_train)
 y_test_pre_ridge = ridge.predict(X_test)
@@ -155,7 +146,7 @@ print("RIDGE REGRESSION")
 print(f"Correlation Coefficient: w = %s, b = %s\n"
       f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
 
-# 采用Lasso Regression模型进行训练与预测
+# Training and predicting using Lasso Regression model
 la = Lasso()
 la.fit(X_train, y_train)
 y_test_pre_la = la.predict(X_test)
@@ -170,7 +161,7 @@ print("LASSO REGRESSION")
 print(f"Correlation Coefficient: w = %s, b = %s\n"
       f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
 
-# 采用Lasso Regression模型进行训练与预测
+# Training and predicting using Elastic Net model
 en = ElasticNet()
 en.fit(X_train, y_train)
 y_test_pre_en = en.predict(X_test)
@@ -186,7 +177,7 @@ print(f"Correlation Coefficient: w = %s, b = %s\n"
       f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
 
 
-# 采用GradientBoosting模型进行训练预测
+# Training and predicting using GradientBoosting model
 gbr = ensemble.GradientBoostingRegressor()
 gbr.fit(X_train, y_train)
 y_test_pre_gbr = gbr.predict(X_test)
@@ -201,7 +192,7 @@ print("GradientBoostingRegressor")
 print(f"R2: {r2}\nScore:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n")
 
 
-# 绘制真实值与预测值的图像
+# Plot the image of the true and predicted values
 plt.plot(y_test, label='real')
 plt.plot(y_test_pre_gbr, label='Gradient Boosting Regressor')
 plt.plot(y_test_pre_linear, label='Linear Regression')

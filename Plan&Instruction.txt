@@ -1,0 +1,59 @@
+Project name: scikit-learn module based on predicting Boston house prices
+
+1. Required third-party libraries
+    Data analysis
+    a)numpy
+    b) pandas
+    Data visualization
+    c) matplotlib.pyplot
+    d) seaborn
+    dataset and model training and testing
+    e) sklearn
+
+2. Learning Plan
+    6.12 day1
+    a) Study of Machine Learning, chapters 1 and 2
+        i) Introduction
+        ii) Model evaluation and selection
+    b) Import the dataset and organize it according to the requirements of the Boston House Price Forecasting Project
+
+    6.13 day2
+    a) Study chapters 2 and 3 of Machine Learning
+        i) Chapter 2.3/2.4/2.5
+        ii) Chapter 3, Section 3.1/3.2
+    b) Continue working with project data and models
+
+    6.13 day3
+    a) Learn linear regression regularization, and logistic regression algorithms
+    b) Try to optimize the prediction performance of the prediction function with different regression algorithms
+
+    6.14 day4
+    a) Learn the plain Bayesian algorithm
+    b) Continue to optimize the model
+
+3. Learning log
+    6.12 day1
+    a) Through reading the watermelon book, we finished learning the basics of machine learning and part of the model evaluation and selection, the learning content is as follows
+        1) Basic terms in machine learning, such as data set, attributes, sample space, training samples, supervised learning, etc.
+            Supervised learning is a type of machine learning, which is based on the principle of giving the learner an input space X and an output space Y, so that the learner can find a mapping from X to Y.
+        2) Some concepts in model evaluation and selection, such as over/underfitting, training/empirical/generalization error, various methods of screening test sets, and concepts related to performance measures (mean square error, error rate, precision, confusion matrix)
+    b) Obtain a dataset of Boston house prices since 1978 via the kaggle website, which contains median house prices and 13 other features. Use the tools in the pandas library to check for nulls and organize the data
+
+    6.13 day2
+    a) Complete the performance measures and related learning of linear regression models by reading the watermelon book and learning the following
+        1) Understand the difference between mean squared error and variance, i.e., variance operates on the mean, while mean squared error operates on the true value, and the two should not be confused
+        (2) Understand the importance of mean square error as a loss function in machine learning, we train the model to reduce the value of the loss function as much as possible
+        3）Understood the concepts of chiselling rate, chiselling accuracy, and equilibrium point
+        4) Understood the basic form of linear model, the basic principle of linear regression, i.e., to find the values of w and b parameters with minimum overall error. We can generally use the least squares method (mean square error minimization), with the gradient descent method
+        to solve
+    b) 80% of the project is completed, i.e., analyzing the data, screening the data, dividing the data, training the data, finding the fit function, and analyzing the fit function
+
+    6.14 day3
+    a) Through reading the watermelon book and the network information, we completed the model of logistic regression and the related learning of linear regularization, and learned the following contents
+        (1) The basic principle of regularization, i.e., adding certain rules to the loss function to reduce the solution space, thus reducing the possibility of finding a fitted solution, the purpose of which is to prevent the model from overfitting
+        (2) The principle of logistic regression (logistic regression), i.e., as a linear classifier, its main function is to handle the classification task, not the regression task. The logistic function, also called sigmoid
+        function, the data features are mapped to a probability value in the interval from 0 to 1 (the possibility that the sample belongs to the positive example)
+        (3) the basic principle of the likelihood function
+    (b) continue to optimize the model on the basis of day2, after trying the cross-sectional optimization to no avail, that is, try to regularize the linear regression model into ridge regression and LASSO regression, but because the size of the data set is too small, let the fitting function is far less than overfitting.
+    Therefore, the regularization process has no progressive effect on the training of the model, or even reverse optimization.
+    c) Continue to try to optimize vertically, i.e., find more models that might fit this project, and so far have used logistic regression to fit it, but the results are still not good.
