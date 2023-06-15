@@ -3,13 +3,17 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import ElasticNet
 from sklearn import preprocessing
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn import ensemble
+from sklearn.preprocessing import StandardScaler
 
 plt.rcParams['font.sans-serif'] = ['SimHei']
 
 # 数据导入
-
 data_url = "http://lib.stat.cmu.edu/datasets/boston"
 raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
 data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
@@ -28,7 +32,7 @@ boston_df.head()
 # 打印均值，最大值，最小值等信息
 boston_df.describe()
 # 提出异常样本有主意提升训练质量
-boston_df = boston_df.loc[boston_df['PRICE'] < 50]
+# boston_df = boston_df.loc[boston_df['PRICE'] < 50]
 
 # correlation分析
 # 分析各个特征与PRICE的相关性，并用可视化工具展示
@@ -68,56 +72,143 @@ plt.title('INDUS')
 plt.show()
 """
 
+# 分析与房价相关的前三个数据
+boston_df.corr()['PRICE'].abs().sort_values(ascending=False).head(4)
+
 # 通过分析柱状图与散点图，我们发现LSTAT, PT RATIO, RM和PRICE的相关系数绝对值最高
+# 结论：每套住宅平均房间数越多，房屋均价越高；该地区的低地位人口比例越大，房屋均价越低。
 
 # 数据筛选
 # 在数据集的特征中删除掉除了上面三个之外的所有特征
-boston_df = boston_df[['LSTAT', 'RM', 'PTRATIO', 'PRICE']]
+# boston_df = boston_df[['LSTAT', 'RM', 'PTRATIO', 'PRICE']]
 y = np.array(boston_df['PRICE'])
 boston_df = boston_df.drop(['PRICE'], axis=1)
-x = np.array(boston_df)
+X = np.array(boston_df)
+
+"""
+# 实例化
+ss = StandardScaler()
+# 特征数据
+X = ss.fit_transform(X)
+# 目标变量
+y = ss.fit_transform(y.reshape(-1,1))
+"""
 
 # 划分训练集与测试集
 # x_train, y_train 表示训练集中的特征值与目标值
 # x_test, y_train 表示测试集中的特征值与目标值
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=888)
 
+"""
 # 数据归一化
 # 创建min_max标准化器实例
 min_max = preprocessing.MinMaxScaler()
 # 数据归一
-x_train = min_max.fit_transform(x_train)
+X_train = min_max.fit_transform(X_train)
 y_train = min_max.fit_transform(y_train.reshape(-1, 1))
-x_test = min_max.fit_transform(x_test)
+X_test = min_max.fit_transform(X_test)
 y_test = min_max.fit_transform(y_test.reshape(-1, 1))
+"""
 
 # 模型训练
 
-# 采用线性回归模型进行训练与预测
+# 采用Linear Regression模型进行训练与预测
 lr = LinearRegression()
 # 拟合
-lr.fit(x_train, y_train)
+lr.fit(X_train, y_train)
 # 得出预测值
-y_test_pre = lr.predict(x_test)
-y_train_pre = lr.predict(x_train)
-
+y_test_pre_linear = lr.predict(X_test)
+y_train_pre_linear = lr.predict(X_train)
 # 基于sklearn中的预测性能得分功能进行模型分析
 # score越高则代表预测性能越好
-score = lr.score(x_test, y_test)
-MSE_test = mean_squared_error(y_test, y_test_pre)
-MSE_train = mean_squared_error(y_train, y_train_pre)
+score = lr.score(X_test, y_test)
+MSE_test = mean_squared_error(y_test, y_test_pre_linear)
+MSE_train = mean_squared_error(y_train, y_train_pre_linear)
 coefficient = lr.coef_
 intercept = lr.intercept_
+r2 = r2_score(y_train_pre_linear, y_train)
+print("LINEAR REGRESSION")
+print(f"Correlation Coefficient: w = %s, b = %s\nR2: {r2}\n"
+      f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
 
+
+"""
+结论：如下的横向优化方案并不理想，当尝试去正则化线性回归模型时，由于数据集的规模太小，反而让模型的性能大打折扣
+建议纵向优化，即发展更多的学习模型
+
+"""
+
+
+# 采用Ridge Regression模型进行训练与预测
+ridge = Ridge()
+ridge.fit(X_train, y_train)
+y_test_pre_ridge = ridge.predict(X_test)
+y_train_pre_ridge = ridge.predict(X_train)
+
+score = ridge.score(X_test, y_test)
+MSE_test = mean_squared_error(y_test, y_test_pre_ridge)
+MSE_train = mean_squared_error(y_train, y_train_pre_ridge)
+coefficient = ridge.coef_
+intercept = ridge.intercept_
+
+print("RIDGE REGRESSION")
 print(f"Correlation Coefficient: w = %s, b = %s\n"
-      f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}" % (coefficient, intercept))
+      f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
+
+# 采用Lasso Regression模型进行训练与预测
+la = Lasso()
+la.fit(X_train, y_train)
+y_test_pre_la = la.predict(X_test)
+y_train_pre_la = la.predict(X_train)
+
+score = la.score(X_test, y_test)
+MSE_test = mean_squared_error(y_test, y_test_pre_la)
+MSE_train = mean_squared_error(y_train, y_train_pre_la)
+coefficient = la.coef_
+intercept = la.intercept_
+print("LASSO REGRESSION")
+print(f"Correlation Coefficient: w = %s, b = %s\n"
+      f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
+
+# 采用Lasso Regression模型进行训练与预测
+en = ElasticNet()
+en.fit(X_train, y_train)
+y_test_pre_en = en.predict(X_test)
+y_train_pre_en = en.predict(X_train)
+
+score = en.score(X_test, y_test)
+MSE_test = mean_squared_error(y_test, y_test_pre_en)
+MSE_train = mean_squared_error(y_train, y_train_pre_en)
+coefficient = en.coef_
+intercept = en.intercept_
+print("ElasticNet REGRESSION")
+print(f"Correlation Coefficient: w = %s, b = %s\n"
+      f"Score:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n" % (coefficient, intercept))
+
+
+# 采用GradientBoosting模型进行训练预测
+gbr = ensemble.GradientBoostingRegressor()
+gbr.fit(X_train, y_train)
+y_test_pre_gbr = gbr.predict(X_test)
+y_train_pre_gbr = gbr.predict(X_train)
+
+
+score = gbr.score(X_test, y_test)
+MSE_test = mean_squared_error(y_test, y_test_pre_gbr)
+MSE_train = mean_squared_error(y_train, y_train_pre_gbr)
+r2 = r2_score(y_train_pre_gbr, y_train)
+print("GradientBoostingRegressor")
+print(f"R2: {r2}\nScore:{score}\nTest Error:{MSE_test}\nTrain Error:{MSE_train}\n")
 
 
 # 绘制真实值与预测值的图像
 plt.plot(y_test, label='real')
-plt.plot(y_test_pre, label='predicted')
-plt.title('Predicted and Real Value ' + r'$R^2=%.4f$' % (r2_score(y_train_pre, y_train)))
+plt.plot(y_test_pre_gbr, label='Gradient Boosting Regressor')
+plt.plot(y_test_pre_linear, label='Linear Regression')
+plt.plot(y_test_pre_ridge, label='Ridge Regression')
+plt.plot(y_test_pre_la, label='Lasso Regression')
+plt.plot(y_test_pre_en, label='ElasticNet Regression')
+
+# plt.title('Predicted and Real Value' + r'$R^2=%.4f$' % (r2_score(y_train_pre_linear, y_train)))
 plt.legend()
 plt.show()
-
-
