@@ -20,4 +20,6 @@ pip install matplotlib
 ## Maintainer
 [@FywOo02_Cho](https://github.com/FywOo02)
 
-
+## License
+![image](https://github.com/FywOo02/Boston-House-Pricing-Forecast/assets/99452851/dda15043-32b0-4e08-87d1-30e0a0189723)
+[MIT](https://github.com/FywOo02/Boston-House-Pricing-Forecast/blob/master/LICENSE) © Cho Zhu
