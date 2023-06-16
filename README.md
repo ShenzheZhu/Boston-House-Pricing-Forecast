@@ -12,9 +12,13 @@
 <img src="https://github.com/FywOo02/Boston-House-Pricing-Forecast/blob/master/myplot.png">
 </div>
 
+## Data Source
+- URL Version: http://lib.stat.cmu.edu/datasets/boston
+- CSV version: https://www.kaggle.com/datasets/altavish/boston-housing-dataset
+
 ## Properties
-- Based on the ordinary linear regression model, we tried cross-sectional optimization to explore the prediction of ridge regression and LASSO regression for the dataset prediction.
-- Analyze the correlation between various characteristics and house prices, and the referenceability of the data. After conducting several comparison experiments, we finally found and tuned the Gradient Boosting Regressor model that can make the function fit up to 92%.
+- Based on the classic linear regression model, we tried cross-sectional optimization to explore to utilize ridge regression and LASSO regression for the dataset prediction.
+- Analyze the correlation between various characteristics and house prices, and the accuracy of data. After conducting several comparison experiments, we finally found and tuned the Gradient Boosting Regressor model that can make the function fit up to 92%.
 
 ## Installation
 1. Install the related libraries
