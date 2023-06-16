@@ -11,15 +11,17 @@
 - Based on the ordinary linear regression model, we tried cross-sectional optimization to explore the prediction of ridge regression and LASSO regression for the dataset prediction.
 - Analyze the correlation between various characteristics and house prices, and the referenceability of the data. After conducting several comparison experiments, we finally found and tuned the Gradient Boosting Regressor model that can make the function fit up to 92%.
 
-## Install
-This project uses machine learning related libraries, go check them out if you don't have them locally installed
-    
+## Installation
+1. Install the related libraries
+> This project uses machine learning related libraries, go check them out if you don't have them locally installed
 ```
 pip install sklearn
 pip install numpy
 pip install pandas
 pip install matplotlib
 ```
+
+
 
 ## Maintainer
 [@FywOo02_Cho](https://github.com/FywOo02)
