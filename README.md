@@ -1,5 +1,10 @@
 # Boston-House-Pricing-Forecast
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/FywOo02/Boston-House-Pricing-Forecast)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/FywOo02/Boston-House-Pricing-Forecast) 
+![Python](https://img.shields.io/badge/python-3.10-519dd9.svg?v=103)
+![Name](https://badgen.net/badge/Author/FywOo02/orange?)
+![Language](https://badgen.net/badge/Language/English/pink?)
+![field](https://badgen.net/badge/Field/MachineLearning/green?)
+
 ## Project Description
 - This is a Boston house price prediction project based on the scikit-learn library. It is very friendly for newbies to machine learning, easy to get started, and doesn't have a lot of dirty data to work with. The core of the project is a regression problem, where we need to find potential relationships between feature values and target values in past data (experience), and use algorithms from different models to fit a function that best fits the house price trend and apply it to future predictions.
 
@@ -19,6 +24,10 @@ pip install sklearn
 pip install numpy
 pip install pandas
 pip install matplotlib
+```
+2. Clone the original files in git bash
+```
+git clone https://github.com/FywOo02/Boston-House-Pricing-Forecast.git
 ```
 
 
