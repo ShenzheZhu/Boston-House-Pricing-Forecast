@@ -5,22 +5,22 @@
 ![Language](https://badgen.net/badge/Language/English/pink?)
 ![field](https://badgen.net/badge/Field/MachineLearning/green?)
 
-## Project Description
-- This is a Boston house price prediction project based on the scikit-learn library. It is very friendly for newbies to machine learning, easy to get started, and doesn't have a lot of dirty data to work with. The core of the project is a regression problem, where we need to find potential relationships between feature values and target values in past data (experience), and use algorithms from different models to fit a function that best fits the house price trend and apply it to future predictions.
+## What is this Project?
+- Boston House Price Forecast based on the scikit-learn library. It is very friendly for newbies to machine learning, easy to get started, and doesn't have a lot of dirty data to work with. The core problem of the project is to find potential relationships between feature values and target values in past data (experience), and use algorithms from different models to fit a function that best fits the house price trend and apply it to future predictions.
 
 <div align=center>
 <img src="https://github.com/FywOo02/Boston-House-Pricing-Forecast/blob/master/myplot.png">
 </div>
 
-## Data Source
+## Where does the data from?
 - URL Version: http://lib.stat.cmu.edu/datasets/boston
 - CSV version: https://www.kaggle.com/datasets/altavish/boston-housing-dataset
 
-## Properties
-- Based on the classic linear regression model, we tried cross-sectional optimization to explore to utilize ridge regression and LASSO regression for the dataset prediction.
-- Analyze the correlation between various characteristics and house prices, and the accuracy of data. After conducting several comparison experiments, we finally found and tuned the Gradient Boosting Regressor model that can make the function fit up to 92%.
+## How did we optimize the module for fitting?
+- Based on the classic linear regression model, we tried cross-sectional optimization to explore utilizing ridge regression and LASSO regression for the dataset prediction.
+- Analyzing the correlation between various characteristics and house prices, and the accuracy of data. After conducting several comparison experiments, we finally found and tuned the Gradient Boosting Regressor model that can make the function fit up to 92%.
 
-## Installation
+## How can I see the results?
 1. Install the related libraries
 > This project uses machine learning related libraries, go check them out if you don't have them locally installed
 ```
