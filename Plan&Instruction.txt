@@ -1,4 +1,4 @@
-Project name: scikit-learn module based on predicting Boston house prices
+Project name: Boston house price prediction based on scikit-learn library
 
 1. Required third-party libraries
     Data analysis
