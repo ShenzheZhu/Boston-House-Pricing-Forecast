@@ -200,6 +200,6 @@ plt.plot(y_test_pre_ridge, label='Ridge Regression')
 plt.plot(y_test_pre_la, label='Lasso Regression')
 plt.plot(y_test_pre_en, label='ElasticNet Regression')
 
-# plt.title('Predicted and Real Value' + r'$R^2=%.4f$' % (r2_score(y_train_pre_linear, y_train)))
+plt.title('Predicted Value and Real Value')
 plt.legend()
 plt.show()
