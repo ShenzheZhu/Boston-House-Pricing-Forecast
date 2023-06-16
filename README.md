@@ -33,7 +33,10 @@ pip install matplotlib
 ```
 git clone https://github.com/FywOo02/Boston-House-Pricing-Forecast.git
 ```
-
+3. Open the forecast_origin.py in your python ide, and try to catch the predicted and fitting results
+```
+forecast_origin.py
+```
 
 
 ## Maintainer
