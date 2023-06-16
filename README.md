@@ -6,7 +6,7 @@
 ![field](https://badgen.net/badge/Field/MachineLearning/green?)
 
 ## What is this Project?
-- Boston House Price Forecast based on the scikit-learn library. It is very friendly for newbies to machine learning, easy to get started, and doesn't have a lot of dirty data to work with. The core problem of the project is to find potential relationships between feature values and target values in past data (experience), and use algorithms from different models to fit a function that best fits the house price trend and apply it to future predictions.
+- Boston House Price Forecast based on the scikit-learn library. It is very friendly for newbies to machine learning, easy to get started, and doesn't have a lot of dirty data to work with. The core goal of the project is to find potential relationships between feature values and target values in past experience (data), and use algorithms from different models to fit a function that best fits the house price trend and apply it to future predictions.
 
 <div align=center>
 <img src="https://github.com/FywOo02/Boston-House-Pricing-Forecast/blob/master/myplot.png">
